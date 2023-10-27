@@ -16,7 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends supervisor \
     && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /var/log/supervisor
 RUN mkdir /var/run/nscd
-COPY bev_lane_det/docker/files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+#COPY bev_lane_det/docker/files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN apt-get update && apt-get install -y --no-install-recommends openssh-server libpam-ldap libnss-ldap ldap-utils nscd sudo cifs-utils vim nano \
     && apt-get clean \
