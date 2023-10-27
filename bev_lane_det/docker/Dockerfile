@@ -25,7 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssh-server 
 
 # copy custom scripts
 RUN mkdir -p /opt/bin/probayes
-COPY bev_lane_det/docker/files/fetch_ssh_public_keys.sh /opt/bin/probayes/fetch_ssh_public_keys.sh
+#COPY bev_lane_det/docker/files/fetch_ssh_public_keys.sh /opt/bin/probayes/fetch_ssh_public_keys.sh
+COPY files/fetch_ssh_public_keys.sh /opt/bin/probayes/fetch_ssh_public_keys.sh
 
 RUN chmod a+x /opt/bin/probayes/fetch_ssh_public_keys.sh
 
@@ -33,10 +34,14 @@ RUN chmod a+x /opt/bin/probayes/fetch_ssh_public_keys.sh
 RUN mkdir -p /var/cache/ldap4ssh
 
 # copy and set config
-COPY bev_lane_det/docker/files/libnss-ldap.conf /etc/libnss-ldap.conf
-COPY bev_lane_det/docker/files/pam_ldap.conf /etc/pam_ldap.conf
-COPY bev_lane_det/docker/files/ldap.conf /etc/ldap.conf
-COPY bev_lane_det/docker/files/pam_mkhomedir.conf /usr/share/pam-configs/my_mkhomedir
+#COPY bev_lane_det/docker/files/libnss-ldap.conf /etc/libnss-ldap.conf
+COPY files/libnss-ldap.conf /etc/libnss-ldap.conf
+#COPY bev_lane_det/docker/files/pam_ldap.conf /etc/pam_ldap.conf
+COPY files/pam_ldap.conf /etc/pam_ldap.conf
+#COPY bev_lane_det/dockerfiles/ldap.conf /etc/ldap.conf
+COPY files/ldap.conf /etc/ldap.conf
+#COPY bev_lane_det/docker/files/pam_mkhomedir.conf /usr/share/pam-configs/my_mkhomedir
+COPY files/pam_mkhomedir.conf /usr/share/pam-configs/my_mkhomedir
 RUN sed -i 's/^#AuthorizedKeysCommand .*$/AuthorizedKeysCommand \/opt\/bin\/probayes\/fetch_ssh_public_keys.sh/' /etc/ssh/sshd_config
 RUN sed -i 's/^#AuthorizedKeysCommandUser .*$/AuthorizedKeysCommandUser root/' /etc/ssh/sshd_config
 RUN sed -i 's/^#PasswordAuthentication .*$/PasswordAuthentication no/' /etc/ssh/sshd_config
@@ -52,7 +57,8 @@ RUN echo "ALLOWED_GROUPS='probayes'" >> /etc/default/ldap_authentication.conf
 # start service ssh
 RUN mkdir /var/run/sshd
 
-COPY bev_lane_det/docker/files/config_git_user.sh /opt/bin/probayes/config_git_user.sh
+#COPY bev_lane_det/docker/files/config_git_user.sh /opt/bin/probayes/config_git_user.sh
+COPY files/config_git_user.sh /opt/bin/probayes/config_git_user.sh
 RUN echo 'bash /opt/bin/probayes/config_git_user.sh $USER' >> /etc/skel/.bashrc
 RUN echo 'export PYTHONPATH=/workspace:$PYTHONPATH' >> /etc/skel/.bashrc
 ##########################################################
