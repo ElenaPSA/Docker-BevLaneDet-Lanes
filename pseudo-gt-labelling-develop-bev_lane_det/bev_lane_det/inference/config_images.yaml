@@ -1,5 +1,0 @@
-model_path: "./bev_lane_det/checkpoints/latest.pth"
-output_path: "./bev_lane_det/tmp_stellantis_results/infer"
-data_folders: ["/data3/VM_datasets/images/"]
-dataset: images
-calibration_path: /data3/VM_datasets/images/sensorconfig.yaml
