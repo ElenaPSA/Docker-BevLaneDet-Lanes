@@ -1,0 +1,9 @@
+model_path: "./bev_lane_det/checkpoints/latest.pth"
+output_path: "./bev_lane_det/tmp_stellantis_results/infer"
+data_folders: ["/data3/VisionDatabases/PSA_2023_dataset/gt_anonymized/20230309-150222-01.00.00-01.00.15@Rikardo/"]
+
+evaluate: True
+dataset: aimotive
+use_preprocessed: True
+test_set_only: False
+single_sequence: True
